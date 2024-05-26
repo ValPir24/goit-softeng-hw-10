@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Quotes</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .quote {
+            margin-bottom: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .quote .author {
+            font-weight: bold;
+        }
+        .quote .tags {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="my-4">All Quotes</h1>
+        {% for quote in quotes %}
+            <div class="quote-container">
+                <p class="quote-text">“{{ quote.quote }}”</p>
+                <p>by <a href="{% url 'author_detail' quote.author.pk %}" class="author-link">{{ quote.author.fullname }}</a> (<a href="{% url 'author_detail' quote.author.pk %}" class="author-link">about</a>)</p>
+                <p>
+                    Tags: 
+                    {% for tag in quote.tags.all %}
+                        <span class="tag">{{ tag.name }}</span>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
